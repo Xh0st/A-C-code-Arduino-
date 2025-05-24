@@ -113,7 +113,7 @@ Arduino D8 → Fan Relay Control
 ---
 
 ### **7. Final Wiring Summary**  
-![Wiring Diagram](https://i.imgur.com/7j6XWz9.png) 
+![Wiring Diagram](https://i.imgur.com/qTqSKu5.jpeg) 
 
 **Example Output**:  
 ```arduino
