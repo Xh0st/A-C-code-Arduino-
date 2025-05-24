@@ -113,12 +113,11 @@ Arduino D8 → Fan Relay Control
 ---
 
 ### **7. Final Wiring Summary**  
-![Wiring Diagram](https://i.imgur.com/7j6XWz9.png)  
+![Wiring Diagram](https://i.imgur.com/7j6XWz9.png) 
 
 **Example Output**:  
 ```arduino
 BUTTON: 0 (0.00V) | AC: OFF | PRESSURE: 45.0 PSI | FAN: ON | SYSTEM READY  
 BUTTON: 624 (3.10V) | AC: ON | PRESSURE: 220.5 PSI | FAN: ON | RUNNING: 30s/480s  
-```  
+```
 
-This setup maintains your original code while ensuring hardware safety. Let me know if you need further adjustments! 🔧
