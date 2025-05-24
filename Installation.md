@@ -8,7 +8,6 @@
 - Arduino Uno/Nano  
 - 12V-to-5V Step-Down Converter (e.g., LM7805 or DC-DC Buck)  
 - 2-Channel Relay Module (for compressor and fan control)  
-- Automotive A/C Pressure Transducer (e.g., 151-3)  
 - **Resistors**: 3kΩ, 4.7kΩ  
 - **Zener Diodes**: 5.1V (x2)  
 - Automotive 12V power source (car battery)  
