@@ -8,4 +8,4 @@ This code is designed to manage an air conditioning system for a **Ford Transit 
 - **Manages fan operation** to activate when needed.
 - **Implements cooldown periods** before restarting the compressor.
 
-This ensures the system runs efficiently while preventing **unsafe pressure levels** and unnecessary wear on components. Let me know if you want a deeper breakdown! 🚗❄️
+This ensures the system runs efficiently while preventing **unsafe pressure levels** and unnecessary wear on components.
