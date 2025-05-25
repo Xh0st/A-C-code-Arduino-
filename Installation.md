@@ -45,10 +45,14 @@ PCM Pin 5 (Oil Pressure Signal) ── 10kΩ ──┬── Arduino A3
  
 
 #### **A/C Refrigerant Pressure Transducer Wiring**:  
-```      
+```
 Transducer VREF (Pin 50)  → Arduino 5V  
 Transducer SIGRTN (Pin 23) → Arduino GND  
 Transducer ACPT (Pin 32)  → Arduino A1 (Analog Input)
+
+#### **A/C Transducer**:  
+- Ensure the transducer is rated for **5V operation** (confirm via datasheet).  
+- Directly powered by Arduino’s 5V pin.
 ```
 
 #### **Compressor Relay**:  
@@ -126,11 +130,20 @@ ENGINE: ON | OIL: 2.8V | BUTTON: 15 (0.07V) | AC: ON | PRESSURE: 210 PSI | FAN: 
 2. **Grounding**:  
    - Ensure all components share the same chassis ground.  
 3. **Relay Protection**:  
-   - Flyback diodes **must** be installed to protect the Arduino.  
-
+   - Flyback diodes **must** be installed to protect the Arduino.
+   - the
+   - 
+### **7. Calibration**  
+#### **Pressure Transducer**:  
+1. Measure the ACPT voltage at **0 PSI** and **MAX PSI** using a refrigerant gauge.  
+2. Update these constants in the code (if necessary):  
+   ```cpp
+   const float PRESSURE_MIN_V = 0.45;  // Voltage at 0 PSI (default: 0.5V)  
+   const float PRESSURE_MAX_V = 4.5;    // Voltage at 400 PSI (default: 4.5V)  
+   ```  
 ---
 
-### **7. Troubleshooting**  
+### **8. Troubleshooting**  
 | Issue                          | Solution                                  |  
 |--------------------------------|-------------------------------------------|  
 | **Compressor/fan not activating** | Check relay wiring and ground connections. |  
@@ -139,5 +152,5 @@ ENGINE: ON | OIL: 2.8V | BUTTON: 15 (0.07V) | AC: ON | PRESSURE: 210 PSI | FAN: 
 
 ---
 
-### **8. Wiring Summary**  
+### **9. Wiring Summary**  
 ![Installation Diagram](https://i.imgur.com/7j6XWz9.png)
