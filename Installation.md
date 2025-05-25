@@ -1,5 +1,4 @@
-### **HVAC Compressor Controller Installation Guide**  
-**Compatible with Provided Code (No Code Changes)**  
+### **HVAC Compressor Controller Installation Guide**   
 
 ---
 
