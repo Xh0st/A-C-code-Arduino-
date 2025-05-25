@@ -49,11 +49,10 @@ PCM Pin 5 (Oil Pressure Signal) ── 10kΩ ──┬── Arduino A3
 Transducer VREF (Pin 50)  → Arduino 5V  
 Transducer SIGRTN (Pin 23) → Arduino GND  
 Transducer ACPT (Pin 32)  → Arduino A1 (Analog Input)
-
+```
 #### **A/C Transducer**:  
 - Ensure the transducer is rated for **5V operation** (confirm via datasheet).  
 - Directly powered by Arduino’s 5V pin.
-```
 
 #### **Compressor Relay**:  
 ```  
