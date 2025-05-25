@@ -41,7 +41,15 @@ PCM Pin 5 (Oil Pressure Signal) ── 10kΩ ──┬── Arduino A3
 - **Function**: Converts 12V to **~2.77V** (safe for Arduino).  
 - **Calibration**:  
   - **Engine Off**: A3 reads **< 1.0V**.  
-  - **Engine Running**: A3 reads **~2.77V**.  
+  - **Engine Running**: A3 reads **~2.77V**.
+ 
+
+#### **A/C Refrigerant Pressure Transducer Wiring**:  
+```      
+Transducer VREF (Pin 50)  → Arduino 5V  
+Transducer SIGRTN (Pin 23) → Arduino GND  
+Transducer ACPT (Pin 32)  → Arduino A1 (Analog Input)
+```
 
 #### **Compressor Relay**:  
 ```  
