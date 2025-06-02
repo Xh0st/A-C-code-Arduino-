@@ -9,22 +9,22 @@ const int compressorPin  = 7;    // Digital output: controls compressor (active 
 const int fanPin         = 8;    // Digital output: controls fan (active LOW)
 
 // Pressure sensor calibration parameters
-const float PRESSURE_MIN_V   = 0.1;
-const float PRESSURE_MAX_V   = 8.5;
-const float PRESSURE_MAX_PSI = 380.0;
+const float PRESSURE_MIN_V   = 0.5;
+const float PRESSURE_MAX_V   = 3.2;
+const float PRESSURE_MAX_PSI = 400.0;
 const float STATIC_PSI       = 25.0;   // Minimum safe pressure
 
 // Oil pressure threshold: engine considered running if oil voltage exceeds this.
-const float OIL_PRESS_ENGINE_ON = 2.0;
+const float OIL_PRESS_ENGINE_ON = 1.0;
 
 // Engine start delay: delay after engine comes online before allowing activation.
 const unsigned long ENGINE_START_DELAY = 5000; // 5 seconds
 
 // Compressor cycle thresholds (PSI ranges for setting runtime parameters)
-const float HIGH_CYCLE_MIN_PSI = 210.0;
-const float HIGH_CYCLE_MAX_PSI = 340.0;
-const float LOW_CYCLE_MIN_PSI  = 150.0;
-const float LOW_CYCLE_MAX_PSI  = 210.0;
+const float HIGH_CYCLE_MIN_PSI = 180.0;
+const float HIGH_CYCLE_MAX_PSI = 280.0;
+const float LOW_CYCLE_MIN_PSI  = 120.0;
+const float LOW_CYCLE_MAX_PSI  = 180.0;
 
 // Global variables for engine and compressor timing
 unsigned long engineStartTime     = 0;
@@ -52,15 +52,15 @@ float adcToPsi(int adcValue) {
 // Set runtime parameters based on the measured pressure.
 void setRuntimeParameters(float pressure) {
   if (pressure >= HIGH_CYCLE_MIN_PSI && pressure <= HIGH_CYCLE_MAX_PSI) {
-    storedRunTimeLimit = 600000;    // 10 minutes run time
-    storedRestartDelay = 120000;    // 120 seconds off time
+    storedRunTimeLimit = 300000;    // 5 minutes run time
+    storedRestartDelay = 10000;    // 10 seconds off time
   } 
   else if (pressure >= LOW_CYCLE_MIN_PSI && pressure < LOW_CYCLE_MAX_PSI) {
-    storedRunTimeLimit = 480000;    // 8 minutes run time
-    storedRestartDelay = 90000;     // 90 seconds off time
+    storedRunTimeLimit = 180000;    // 3 minutes run time
+    storedRestartDelay = 20000;     // 20 seconds off time
   } 
   else {
-    storedRunTimeLimit = 180000;    // 3 minutes run time (default)
+    storedRunTimeLimit = 120000;    // 2 minutes run time (default)
     storedRestartDelay = 30000;     // 30 seconds off time (default)
   }
 }
@@ -105,10 +105,10 @@ void loop() {
   bool engineStartDelayPassed = engineRunning && ((millis() - engineStartTime) >= ENGINE_START_DELAY);
   
   // Determine if AC (compressor) is requested (button pressed)
-  bool compressorRequested = (buttonADC < 80);
+  bool compressorRequested = (buttonADC < 90);
   
   // Pressure safety check: safe if PSI is at least STATIC_PSI and below 300 PSI
-  bool pressureSafe = (pressurePSI >= STATIC_PSI && pressurePSI < 300);
+  bool pressureSafe = (pressurePSI >= STATIC_PSI && pressurePSI < 280);
   
   // If pressure is unsafe, set waiting flag; system won't activate until new button cycle
   if (!pressureSafe) {
@@ -165,7 +165,7 @@ void loop() {
   bool fanActive = compressorRequested && engineRunning && engineStartDelayPassed && pressureSafe && !waitingForReset;
   
   // Reset waiting flag when button is released
-  if (waitingForReset && (buttonADC >= 80)) {
+  if (waitingForReset && (buttonADC >= 90)) {
     waitingForReset = false;
   }
   
@@ -183,9 +183,9 @@ void loop() {
     Serial.print("s)");
   }
   
-  Serial.print(" OIL: ");
+  Serial.print(" (");
   Serial.print(oilVoltage, 2);
-  Serial.print("V");
+  Serial.print("V)");
   
   Serial.print(" | BUTTON: ");
   Serial.print(buttonADC);
@@ -221,8 +221,12 @@ void loop() {
   Serial.print(" | FAN: ");
   Serial.print(fanActive ? "ON" : "OFF");
 
+  if (!pressureSafe) {
+    Serial.print(" | UNSAFE - RESET BUTTON CYCLE REQUIRED");
+  }  
+
   // Only show cycle parameters when engine start delay has passed
-  if (engineStartDelayPassed) {
+  if (engineStartDelayPassed && pressureSafe) {
     Serial.print(" | CYCLE: ");
     Serial.print(storedRunTimeLimit/1000);
     Serial.print("s ON/");
